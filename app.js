@@ -18,25 +18,25 @@ app.get("/", (req,res) => {
 })
 
 app.post("/create",  (req, res) => {
-    let { name, email, age, password } = req.body;
-    // ==============================================Encruption ========================
-    bcrypt.genSalt(10, (err, salt) => {
-        console.log(salt);
-        bcrypt.hash(password, salt, async (err, hash) => {
-    // ==============================================Encruption ========================
-          let createdUser = await userModal.create({
-            name: name,
-            email: email,
-            password: hash,
-            age: age,
-          });
-            
-            let token = jwt.sign({ email: email }, "shhhshhhshhhshh");
-            res.cookie("token", token);
+  let { name, email, age, password } = req.body;
+  // ============================================== Encruption ========================
+  bcrypt.genSalt(10, (err, salt) => {
+    console.log(salt);
+    bcrypt.hash(password, salt, async (err, hash) => {
+      // ============================================== Encruption ========================
+      let createdUser = await userModal.create({
+        name: name,
+        email: email,
+        password: hash,
+        age: age,
+      });
 
-          res.send(createdUser);
-        });
-    })    
+      let token = jwt.sign({ email: email }, "shhhshhhshhhshh");
+      res.cookie("token", token);
+
+      res.send(createdUser);
+    });
+  });
 })
 
 
